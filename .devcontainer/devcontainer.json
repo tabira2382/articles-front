@@ -1,0 +1,19 @@
+{
+  "name": "Next.js Dev Container",
+  "context": "..",
+  "dockerFile": "Dockerfile",
+  "settings": {
+    "typescript.tsdk": "node_modules/typescript/lib",
+    "editor.formatOnSave": true,
+    "terminal.integrated.shell.linux": "/usr/bin/zsh",
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": true
+    }
+  },
+  "extensions": [],
+  "postCreateCommand": "npm install",
+  "forwardPorts": [
+    3000
+  ],
+  "remoteUser": "node"
+}
