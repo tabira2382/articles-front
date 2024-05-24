@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { fetchArticles } from '@/lib/api';
 
 interface Article {
   id: string;
@@ -14,17 +15,17 @@ const ArticleList: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    const fetchArticles = async () => {
+    const getArticles = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/articles/api/articles/');
-        setArticles(response.data);
+        const articlesData = await fetchArticles();
+        setArticles(articlesData);
       } catch (error) {
         console.error('Failed to fetch articles', error);
       } finally {
         setLoading(false);
       }
     };
-    fetchArticles();
+    getArticles();
   }, []);
 
   if (loading) {

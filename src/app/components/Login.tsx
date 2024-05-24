@@ -1,22 +1,23 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useRouter } from 'next/router';
+import { login } from '@/lib/api';
 
 const Login: React.FC = () => {
-  const [email, setEmail] = useState<string>('');
+  const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [error, setError] = useState<string| null>(null);
+  const router = useRouter();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
 
     try {
-      const response = await axios.post('http://localhost:8000/articles/api/auth/login/', {
-        username: email,
-        password: password,
-      });
-      localStorage.setItem('token', response.data.token);
+      const data = await login(username, password);
+      localStorage.setItem('token', data.token);
       alert('Login successful');
+      router.push('/')
     } catch(error){
       setError('invalid email or password');
     }
@@ -27,12 +28,13 @@ const Login: React.FC = () => {
       <h1 className="text-3xl font-bold text-center mb-6">Login</h1>
       <form onSubmit={handleLogin}>
         <div className="mb-4">
-          <label className="block text-gray-700">Email</label>
+          <label className="block text-gray-700">Username</label>
           <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
             className="w-full px-3 py-2 border rounded"
+            required
           />
         </div>
         <div className="mb-4">
@@ -42,6 +44,7 @@ const Login: React.FC = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             className="w-full px-3 py-2 border rounded"
+            required
           />
         </div>
         {error && <p className="text-red-500">{error}</p>}
