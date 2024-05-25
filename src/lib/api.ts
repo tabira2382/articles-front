@@ -43,3 +43,21 @@ export const register = async (username: string, email: string, password: string
   });
   return response.data
 }
+
+// いいね登録
+export const likeArticle = async (articleId: number) => {
+  const response = await api.post('/articles/api/like/', {
+    article_id: articleId
+  },{
+    headers: getAuthHeaders()
+  });
+  return response.data;
+}
+
+// プロフィール情報
+export const fetchUserProfile = async () => {
+  const response = await api.get('articles/api/profile/', {
+    headers: getAuthHeaders()
+  });
+  return response.data;
+};

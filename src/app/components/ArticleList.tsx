@@ -1,14 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { fetchArticles } from '@/lib/api';
+import { fetchArticles, likeArticle } from '@/lib/api';
+import { Article } from '../../articles';
 
-interface Article {
-  id: string;
-  title: string;
-  url: string;
-  tag_list: string;
-  likes_count: number;
-}
 
 const ArticleList: React.FC = () => {
   const [articles, setArticles] = useState<Article[]>([]);
@@ -28,6 +22,23 @@ const ArticleList: React.FC = () => {
     getArticles();
   }, []);
 
+  const handleLike = async (articleId: number) => {
+    try {
+      const response = await likeArticle(articleId);
+      setArticles(articles.map(article => {
+        if (article.id === articleId) {
+          return {
+            ...article,
+            likes_count: response.likes_count
+          };
+        }
+        return article;
+      }));
+    } catch (error) {
+      console.error('Failed to like article', error);
+    }
+  };
+
   if (loading) {
     return <p className="text-center mt-4">Loading...</p>;
   }
@@ -41,6 +52,12 @@ const ArticleList: React.FC = () => {
             <h2 className="text-xl font-semibold mb-2">{article.title}</h2>
             <p className="text-gray-600 mb-2">Tags: {article.tag_list}</p>
             <p className="text-gray-600 mb-2">Likes: {article.likes_count}</p>
+            <button
+              onClick={() => handleLike(article.id)}
+              className="bg-blue-500 text-white py-2 px-4 rounded"
+            >
+              {article.likes_count > 0 ? 'Unlike' : 'Like'}
+            </button>
             <a href={article.url} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">
               Read more
             </a>

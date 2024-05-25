@@ -15,6 +15,9 @@ const HomePage: React.FC = () => {
           <li>
             <Link href="/register">Register</Link>
           </li>
+          <li>
+            <Link href="/profile">Profile</Link>
+          </li>
         </ul>
       </nav>
       <ArticleList />
