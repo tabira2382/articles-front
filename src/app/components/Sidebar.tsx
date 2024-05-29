@@ -21,6 +21,11 @@ const Sidebar: React.FC = () => {
           </Link>
         </li>
         <li>
+          <Link href="/search" passHref>
+            <span className="block p-2 hover:bg-gray-700 rounded">Search</span>
+          </Link>
+        </li>
+        <li>
           <Link href="/profile" passHref>
             <span className="block p-2 hover:bg-gray-700 rounded">Profile</span>
           </Link>
