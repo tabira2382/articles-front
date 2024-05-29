@@ -48,7 +48,7 @@ export const register = async (username: string, email: string, password: string
 export const likeArticle = async (articleId: number) => {
   const response = await api.post('/articles/api/like/', {
     article_id: articleId
-  },{
+  }, {
     headers: getAuthHeaders()
   });
   return response.data;
@@ -59,5 +59,15 @@ export const fetchUserProfile = async () => {
   const response = await api.get('articles/api/profile/', {
     headers: getAuthHeaders()
   });
+  return response.data;
+};
+
+// 検索機能
+export const searchArticles = async (keyword: string) => {
+  console.log('searchArticles called with keyword:', keyword); // デバッグ用
+  const response = await api.get(`/articles/api/search/?keyword=${encodeURIComponent(keyword)}`, {
+    headers: getAuthHeaders()
+  });
+  console.log('API response:', response); // デバッグ用
   return response.data;
 };
