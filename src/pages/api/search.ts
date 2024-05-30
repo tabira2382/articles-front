@@ -4,7 +4,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { keyword } = req.query;
 
   try {
-    const backendUrl = process.env.BACKEND_URL || 'http://localhost:8000';
+    const backendUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
     const response = await fetch(`${backendUrl}/articles/api/search/?keyword=${encodeURIComponent(keyword as string)}`);
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
