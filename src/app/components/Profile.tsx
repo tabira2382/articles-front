@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { fetchUserProfile } from '@/lib/api';
 import { UserProfile } from '@/types/user';
+import axios from 'axios';
 
 const Profile: React.FC = () => {
   const [profile, setProfile] = useState<UserProfile | null>(null)
@@ -13,19 +14,19 @@ const Profile: React.FC = () => {
       try {
         const profileData = await fetchUserProfile();
         setProfile(profileData);
-      } catch(error){
+      } catch (error) {
         console.error('Failed to fech user profile', error);
-        if (error.response.statsu === 401) {
+        if (axios.isAxiosError(error) && error.response && error.response.status === 401) {
           router.push('/login');
         }
-      }finally{
+      } finally {
         setLoading(false);
       }
     };
     getUserProfile();
-  },[router]);
+  }, [router]);
 
-  if(loading){
+  if (loading) {
     return <p className="text-center mt-4">Loading...</p>;
   }
 
