@@ -26,7 +26,7 @@ const ArticleList: React.FC = () => {
     try {
       const response = await likeArticle(articleId);
       setArticles(articles.map(article => {
-        if (article.id === articleId) {
+        if (Number(article.id) === articleId) {
           return {
             ...article,
             likes_count: response.likes_count
