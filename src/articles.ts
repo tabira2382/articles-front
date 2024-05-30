@@ -5,4 +5,5 @@ export interface Article {
   tag_list: string;
   likes_count: number;
   image_url?: string;
+  article_like_count: number;
 }
