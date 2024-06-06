@@ -2,6 +2,8 @@ import { useState } from 'react';
 import SearchForm from '@/app/components/SearchForm';
 import SearchList from '@/app/components/SearchList';
 import { searchArticles } from '@/lib/api';
+import Layout from '../app/components/Layout';
+
 
 const SearchPage = () => {
   const [articles, setArticles] = useState([]);
@@ -22,10 +24,13 @@ const SearchPage = () => {
 
   return (
     <div>
-      <h1>Search</h1>
-      <SearchForm onSearch={handleSearch} />
-      {error && <p className="text-red-500">{error}</p>}
-      <SearchList articles={articles} />
+      <Layout>
+        <div className="flex justify-center">
+          <SearchForm onSearch={handleSearch} />
+        </div>
+        {error && <p className="text-red-500 text-center">{error}</p>}
+        <SearchList articles={articles} />
+      </Layout>
     </div>
   );
 };
